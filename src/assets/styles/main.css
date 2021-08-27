@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap");
+
+body,
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+}
+body {
+  background-color: rgb(15, 15, 15);
+}
+input,
+button,
+select {
+  outline: none;
+}
+
+.wrapper {
+  max-width: 1280px;
+  padding-inline: 80px;
+  margin: 0 auto;
+}
+
+.black {
+  color: #0f0f0f;
+}
+.yellow {
+  color: #f7e600;
+}
+.white {
+  color: #fcfcfc;
+}
+
+body::-webkit-scrollbar {
+  width: 5px; /* ширина scrollbar */
+}
+body::-webkit-scrollbar-track {
+  background: #0f0f0f; /* цвет дорожки */
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #f7e600; /* цвет плашки */
+  border-radius: 20px; /* закругления плашки */
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding-inline: 40px;
+  }
+}

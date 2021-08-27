@@ -1,0 +1,38 @@
+[
+  {
+    "socialName": "instagram",
+    "img": "socialsImage/instagram.svg"
+  },
+  {
+    "socialName": "facebook",
+    "img": "socialsImage/facebook.svg"
+  },
+  {
+    "socialName": "pinterest",
+    "img": "socialsImage/pinterest.svg"
+  },
+  {
+    "socialName": "vk",
+    "img": "socialsImage/vk.svg"
+  },
+  {
+    "socialName": "youtube",
+    "img": "socialsImage/youtube.svg"
+  },
+  {
+    "socialName": "tik-tok",
+    "img": "socialsImage/tik-tok.svg"
+  },
+  {
+    "socialName": "telegram",
+    "img": "socialsImage/telegram.svg"
+  },
+  {
+    "socialName": "twitter",
+    "img": "socialsImage/twitter.svg"
+  },
+  {
+    "socialName": "http",
+    "img": "socialsImage/http.svg"
+  }
+]
