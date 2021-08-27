@@ -10,7 +10,7 @@ import './assets/styles/main.css'
 Vue.config.productionTip = false
 
 Vue.use(Vuelidate)
-
+console.log(process.env)
 store.dispatch('initializeApp').then(()=>{
   new Vue({
     store,
