@@ -20,7 +20,7 @@
 .gear1,
 .gear2,
 .gear3 {
-  transition: all .3s linear;
+  transition: all 0.3s linear;
 }
 .gear1 {
   width: 30px;
@@ -30,7 +30,7 @@
   width: 25px;
   height: 25px;
   position: relative;
-    left: 2px;
+  left: 2px;
 }
 .gear3 {
   width: 20px;
@@ -47,5 +47,11 @@
 }
 .gears-button:hover .gear3 {
   transform: rotate(60deg);
+}
+@media (max-width: 768px) {
+  .gears-button {
+    top: 1rem;
+    right: 1rem;
+  }
 }
 </style>

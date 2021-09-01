@@ -26,8 +26,10 @@
         @click.prevent="showSocial = !showSocial"
         v-if="!inputSocialLink"
       >
-        <img src="@/assets/pictures/plus.svg" alt="add" v-if="!showSocial" />
-        <img src="@/assets/pictures/minus.svg" alt="remove" v-else />
+        <div v-if="!showSocial" class="plus">+</div>
+        <div v-else class="minus">&ndash;</div>
+        <!-- <img src="@/assets/pictures/plus.svg" alt="add" v-if="!showSocial" />
+        <img src="@/assets/pictures/minus.svg" alt="remove" v-else /> -->
       </span>
 
       <div :class="{ 'social-list': true, 'social-list-active': showSocial }">
@@ -102,6 +104,7 @@ export default {
 
   mounted() {
     this.socialsData = socialsData;
+    this.userInfoLocal = this.userInfo;
   },
 
   watch: {
@@ -284,6 +287,25 @@ label span {
   border-radius: 100%;
   transition: box-shadow 1s linear, border 0.1s linear, transform 0.1s linear;
   animation: pulse 1s linear infinite alternate;
+
+  .plus {
+    color: #f7e600;
+  }
+
+  .minus {
+    color: #0f0f0f;
+  }
+
+  .plus,
+  .minus {
+    font-size: 6rem;
+    font-weight: 100;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    position: relative;
+    bottom: 2px;
+  }
 }
 .social-add:hover {
   animation: none;
