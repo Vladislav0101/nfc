@@ -1,5 +1,4 @@
 import firebase from "firebase/app";
-// import store from "..";
 
 export default {
   state: {
@@ -15,7 +14,6 @@ export default {
   mutations: {
     setUserInfo(state, value) {
       state.userInfo = value;
-      console.log('setUserInfo', value);
     },
   },
 
@@ -23,27 +21,23 @@ export default {
     getUserInfo({ commit, getters }) {
       const database = firebase.database();
 
-      return new Promise((res, rej) => {
+      return new Promise((res) => {
         database.ref("users/" + getters.accountId + "/userInfo").on("value", (snapshot) => {
-          console.log('getUserInfo', snapshot.val())
           if (snapshot.val()) {
             commit("setUserInfo", snapshot.val());
             res(true);
           } else {
             commit("setUserInfo", false);
-            rej(false);
           }
         });
       });
     },
 
     sendUserInfo({ commit, getters }, obj) {
-      console.log(obj)
-      console.log(commit, getters)
       firebase
         .database()
         .ref(`users/${getters.accountId}/userInfo`)
-        .update(obj).then(()=>{
+        .update(obj).then(() => {
           commit('setUserInfo', obj)
         })
     },

@@ -63,15 +63,12 @@ export default {
       commit("setIsInit", value);
     },
 
-    checkPassword({dispatch, getters }, password) {
-      const database = firebase.database();
-      let data;
-
+    checkPassword({ dispatch, getters }, password) {
       return new Promise((res, rej) => {
-        database
+        firebase.database()
           .ref("users/" + getters.accountId + "/password")
           .on("value", (snapshot) => {
-            data = snapshot.val();
+            const data = snapshot.val();
 
             if (data === password) {
               if (!getters.isInit) {

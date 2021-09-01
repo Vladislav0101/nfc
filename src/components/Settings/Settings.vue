@@ -1,88 +1,76 @@
 <template>
   <form>
-        <div class="name">
-          <label for="firstName">
-            <span>Имя</span>
-            <input
-              type="text"
-              autocomplete="off"
-              v-model="userInfoLocal.firstName"
-              id="firstName"
-            />
-          </label>
-          <label for="secondName">
-            <span>Фамилия</span>
-            <input
-              type="text"
-              autocomplete="off"
-              v-model="userInfoLocal.secondName"
-              id="secondName"
-            />
-          </label>
-        </div>
-        <div class="social">
-          <span
-            class="social-add"
-            @click="showSocial = !showSocial"
-            v-if="!inputSocialLink"
-          >
-            <img
-              src="@/assets/pictures/plus.svg"
-              alt="add"
-              v-if="!showSocial"
-            />
-            <img src="@/assets/pictures/minus.svg" alt="remove" v-else />
-          </span>
+    <div class="name">
+      <label for="firstName">
+        <span>Имя</span>
+        <input
+          type="text"
+          autocomplete="off"
+          v-model.trim="userInfoLocal.firstName"
+          id="firstName"
+        />
+      </label>
+      <label for="secondName">
+        <span>Фамилия</span>
+        <input
+          type="text"
+          autocomplete="off"
+          v-model.trim="userInfoLocal.secondName"
+          id="secondName"
+        />
+      </label>
+    </div>
+    <div class="social">
+      <span
+        class="social-add"
+        @click.prevent="showSocial = !showSocial"
+        v-if="!inputSocialLink"
+      >
+        <img src="@/assets/pictures/plus.svg" alt="add" v-if="!showSocial" />
+        <img src="@/assets/pictures/minus.svg" alt="remove" v-else />
+      </span>
 
-          <div
-            :class="{ 'social-list': true, 'social-list-active': showSocial }"
-          >
-            <img
-              v-for="social of socialsData"
-              :key="social.socialName"
-              :src="returnImg(social.img)"
-              :alt="social.socialName"
-              :class="{ [social.socialName]: 1, 'social-el': 1 }"
-              @click="addSocial(social.socialName)"
-            />
-          </div>
+      <div :class="{ 'social-list': true, 'social-list-active': showSocial }">
+        <img
+          v-for="(social, idx) of socialsData"
+          :key="social.socialName + idx"
+          :src="returnImg(social.img)"
+          :alt="social.socialName"
+          :class="{ [social.socialName]: 1, 'social-el': 1 }"
+          @click="addSocial(social.socialName)"
+        />
+      </div>
+    </div>
 
-          <!-- <div v-if="inputSocialLink" class="added-social">
-          <img :src="currentSocialImg" alt="social" width="40px">
-          <input type="text" autocomplete="off" placeholder="Добавьте ссылку" />
-          <button>Сохранить</button>
-        </div> -->
-        </div>
-
-        <div>
-          <div
-            v-for="(social, idx) of userInfoLocal.socials"
-            :key="social.social"
-            class="added-social"
-          >
-            <img
-              :src="returnImg(`socialsImage/${social.social}.svg`)"
-              alt=""
-              width="40px"
-            />
-            <input
-              type="text"
-              autocomplete="off"
-              placeholder="Добавьте ссылку"
-              v-model="social.link"
-            />
-            <img
-              src="@/assets/pictures/remove.svg"
-              alt=""
-              width="23px"
-              @mouseenter="shakeBasket"
-              @click="removeElFromSocials(idx)"
-              class="basket"
-            />
-          </div>
-        </div>
-        <button @click.prevent="submitInfo">Сохранить</button>
-      </form>
+    <div>
+      <div
+        v-for="(social, idx) of userInfoLocal.socials"
+        :key="social.social + idx"
+        class="added-social"
+      >
+        <img
+          :src="returnImg(`socialsImage/${social.social}.svg`)"
+          alt=""
+          width="40px"
+        />
+        <input
+          type="text"
+          autocomplete="off"
+          placeholder="Добавьте ссылку"
+          v-model.trim="social.link"
+        />
+        <img
+          src="@/assets/pictures/remove.svg"
+          alt=""
+          width="23px"
+          @mouseenter="shakeBasket"
+          @click="removeElFromSocials(idx)"
+          class="basket"
+        />
+      </div>
+    </div>
+    <button @click.prevent="submitInfo">Сохранить</button>
+  </form>
 </template>
 
 <script>
@@ -101,7 +89,7 @@ export default {
   data() {
     return {
       userInfoLocal: {
-        firstName: null,
+        firstName: "",
         secondName: null,
         socials: [],
       },
@@ -114,8 +102,12 @@ export default {
 
   mounted() {
     this.socialsData = socialsData;
-    this.userInfoLocal = this.userInfo
-    console.log("this.userInfo", this.userInfo);
+  },
+
+  watch: {
+    userInfo() {
+      this.userInfoLocal = this.userInfo;
+    },
   },
 
   computed: {
@@ -126,10 +118,7 @@ export default {
     ...mapActions(["sendUserInfo"]),
 
     submitInfo() {
-      console.log(this.userInfoLocal);
       this.sendUserInfo(this.userInfoLocal);
-      // this.$v.$touch();
-      // console.log(this.$v)
     },
 
     returnImg(src) {
@@ -138,12 +127,9 @@ export default {
 
     addSocial(social) {
       this.showSocial = false;
-      // this.inputSocialLink = true;
-      // this.currentSocialImg = img
 
       this.userInfoLocal.socials.push({
         social,
-        // img,
       });
     },
 
@@ -158,10 +144,10 @@ export default {
       this.userInfoLocal.socials.splice(idx, 1);
     },
   },
-}
+};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 @keyframes pulse {
   0% {
     box-shadow: 0 0 5px 0px #f7e600, inset 0 0 5px 0px #f7e600;
@@ -222,8 +208,7 @@ input:focus {
 }
 button {
   margin: 1rem auto;
-  width: 20vw;
-  max-width: 250px;
+  padding-inline: 5px;
   height: 2rem;
   background-color: #fcfcfc;
   border: none;
@@ -246,13 +231,13 @@ button:hover {
 }
 .visible-settings {
   flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
   transform: translateX(0);
   position: fixed;
   inset: 0;
 }
-.visible-settings h2{
+.visible-settings h2 {
   color: #fcfcfc;
   font-weight: 900;
   font-size: 3rem;

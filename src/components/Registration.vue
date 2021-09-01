@@ -1,9 +1,14 @@
 <template>
   <div class="password-box">
     <div class="password-popup">
-      <h2>Log in to our platform</h2>
-      <input type="password" v-model="password" />
-      <button @click="callCheckPasswordAction">Sign in</button>
+      <h2>Подтверждение пароля</h2>
+      <input
+        type="password"
+        v-model="password"
+        placeholder="Пароль"
+        :class="{ 'incorrect-password': incorrectPassword }"
+      />
+      <button @click="callCheckPasswordAction">Вход</button>
     </div>
   </div>
 </template>
@@ -15,6 +20,7 @@ export default {
   data() {
     return {
       password: null,
+      incorrectPassword: false,
     };
   },
 
@@ -27,23 +33,31 @@ export default {
           this.setLocalLogIn(true);
         })
         .catch(() => {
-          // Повторный ввод пароля
+          this.password = "";
+          this.incorrectPassword = true;
+
+          let timerId = setTimeout(() => {
+            this.incorrectPassword = false;
+            clearTimeout(timerId);
+          }, 1000);
         });
     },
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .password-box {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 h2 {
-  margin: 1rem 0 2.5rem 0;
+  margin-bottom: 2.5rem;
   color: rgb(15, 15, 15);
   font-weight: 100;
+  line-height: 25px;
 }
 .password-popup {
   display: grid;
@@ -51,7 +65,7 @@ h2 {
   align-items: center;
   border-radius: 5px;
   width: 17rem;
-  height: 12rem;
+  padding: 20px;
   background-color: rgb(247, 230, 0);
 }
 input {
@@ -60,7 +74,7 @@ input {
   padding-left: 1rem;
   border: none;
   border-radius: 3px;
-  transition: all 0.15s linear;
+  transition: box-shadow 0.15s linear, all 0.1s linear;
   box-shadow: 0 0 14px 0px #fcfcfc;
 }
 input:hover {
@@ -70,6 +84,10 @@ input:hover {
 input:focus {
   box-shadow: 0 0 0 #fcfcfc;
   /* background-color: black; */
+}
+.incorrect-password {
+  background-color: rgb(255, 65, 65);
+  box-shadow: 0 0 14px 0px rgb(255, 65, 65);
 }
 button {
   margin: 1rem 0;

@@ -17,10 +17,10 @@ import Settings from "@/components/Settings/Settings.vue";
 import Registration from "@/components/Registration.vue";
 
 export default {
-  data(){
-    return{
-      isSettings:false
-    }
+  data() {
+    return {
+      isSettings: false,
+    };
   },
 
   computed: {
@@ -35,7 +35,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .settings-box {
   display: flex;
   transition: all 0.2s linear;

@@ -1,16 +1,19 @@
 <template>
   <section class="wrapper">
-    <SettingsBlock />
+    <SettingsBlock v-if="isInit" />
 
-    <UserInfo v-if="userInfo" :userInfo='userInfo'/>
-    
-    <SorryButNoUserInfo v-else/>
+    <UserInfo v-if="isInit && userInfo" :userInfo="userInfo" />
+
+    <SorryButNoUserInfo v-if="isInit && !userInfo" />
+
+    <Registration v-if="!isInit" />
   </section>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
 
+import Registration from "@/components/Registration.vue";
 import SorryButNoUserInfo from "@/components/SorryButNoUserInfo.vue";
 import SettingsBlock from "@/components/Settings/SettingsBlock.vue";
 import UserInfo from "@/components/UserInfo.vue";
@@ -20,12 +23,11 @@ export default {
     ...mapActions(["getUserInfo"]),
   },
   computed: {
-    ...mapGetters(["userInfo"]),
+    ...mapGetters(["userInfo", "isInit"]),
   },
   mounted() {
-    this.getUserInfo(this.$route.params.id);
+    this.getUserInfo();
   },
-
-  components: { SorryButNoUserInfo, SettingsBlock, UserInfo },
+  components: { SorryButNoUserInfo, SettingsBlock, UserInfo, Registration },
 };
 </script>

@@ -21,8 +21,6 @@
 </template>
 
 <script>
-// import socialsData from "@/static/socialsData.json";
-
 export default {
   props: ["userInfo"],
 
@@ -34,7 +32,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 * {
   color: #fcfcfc;
 }
@@ -44,17 +42,18 @@ section {
   align-items: center;
   flex-direction: column;
   padding-top: 6rem;
-}
-.mainInfo{
-  text-align: center;
-  font-weight: 800;
-  font-size: 2rem;
+
+  .mainInfo {
+    text-align: center;
+    font-weight: 800;
+    font-size: 2rem;
+  }
 }
 .social-img {
   width: 175px;
-  transition: all .1s linear;
+  transition: all 0.1s linear;
 }
-.social-img:hover{
+.social-img:hover {
   transform: scale(1.05);
 }
 .socials {
@@ -66,11 +65,10 @@ section {
   margin-top: 3rem;
 }
 
-@media(max-width:768px){
-.social-img {
-  width: 80px;
-  transition: all .1s linear;
-}
-
+@media (max-width: 768px) {
+  .social-img {
+    width: 80px;
+    transition: all 0.1s linear;
+  }
 }
 </style>
