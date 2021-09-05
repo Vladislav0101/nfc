@@ -5,7 +5,7 @@ import Vuelidate from 'vuelidate'
 import store from './store'
 import router from './route/index'
 
-import './assets/styles/main.css'
+import './assets/styles/main.scss'
 
 Vue.config.productionTip = false
 

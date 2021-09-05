@@ -1,5 +1,16 @@
 <template>
   <form>
+    <div class="imageBlock">
+      <label>
+        <input type="file" ref="avatarInput" @input="avatarInput" />
+        <img
+          :src="avatar ? avatar : require('@/assets/pictures/add-user.svg')"
+          alt="avatar"
+          class="avatarImage"
+        />
+      </label>
+    </div>
+
     <div class="name">
       <label for="firstName">
         <span>Имя</span>
@@ -20,6 +31,7 @@
         />
       </label>
     </div>
+
     <div class="social">
       <span
         class="social-add"
@@ -28,8 +40,6 @@
       >
         <div v-if="!showSocial" class="plus">+</div>
         <div v-else class="minus">&ndash;</div>
-        <!-- <img src="@/assets/pictures/plus.svg" alt="add" v-if="!showSocial" />
-        <img src="@/assets/pictures/minus.svg" alt="remove" v-else /> -->
       </span>
 
       <div :class="{ 'social-list': true, 'social-list-active': showSocial }">
@@ -71,6 +81,14 @@
         />
       </div>
     </div>
+
+    <!-- <div>
+      <label>
+        <p>Изменить пароль</p>
+        <input type="password" v-model="changePasswordMain" />
+        <input type="password" v-model="changePasswordCheck" />
+      </label>
+    </div> -->
     <button @click.prevent="submitInfo">Сохранить</button>
   </form>
 </template>
@@ -99,6 +117,10 @@ export default {
       inputSocialLink: false,
       currentSocialImg: null,
       socialsData: null,
+      password: {
+        changePasswordMain: "",
+        changePasswordCheck: "",
+      },
     };
   },
 
@@ -114,11 +136,16 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["userInfo"]),
+    ...mapGetters(["userInfo", "avatar"]),
   },
 
   methods: {
-    ...mapActions(["sendUserInfo"]),
+    ...mapActions(["sendUserInfo", "setAvatar"]),
+
+    avatarInput() {
+      // this.avatar = this.$refs.avatarInput.files[0];
+      this.setAvatar(this.$refs.avatarInput.files[0]);
+    },
 
     submitInfo() {
       this.sendUserInfo(this.userInfoLocal);
@@ -154,9 +181,11 @@ export default {
 @keyframes pulse {
   0% {
     box-shadow: 0 0 5px 0px #f7e600, inset 0 0 5px 0px #f7e600;
+    opacity: 0.4;
   }
   100% {
     box-shadow: 0 0 15px 0px #f7e600, inset 0 0 20px 0px #f7e600;
+    opacity: 0.9;
   }
 }
 @keyframes focusedButton {
@@ -225,26 +254,46 @@ button:hover {
   color: #f7e600;
 }
 
+.imageBlock {
+  position: relative;
+  @media (max-width: 480px) {
+    margin: 1rem auto;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 100%;
+    margin: 2rem auto;
+    
+    @media (max-width: 768px) {
+      width: 100px;
+      height: 100px;
+    }
+  }
+  .avatarImage {
+    width: 150px;
+
+    @media (max-width: 768px) {
+      width: 100px;
+    }
+  }
+  input {
+    position: absolute;
+    width: 0;
+    opacity: 0;
+  }
+}
 .settings-box {
   display: flex;
   transition: all 0.2s linear;
   position: fixed;
   inset: 0;
   transform: translateX(100vw);
-}
-.visible-settings {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transform: translateX(0);
-  position: fixed;
-  inset: 0;
-}
-.visible-settings h2 {
-  color: #fcfcfc;
-  font-weight: 900;
-  font-size: 3rem;
-  margin-bottom: 4rem;
 }
 form {
   max-width: 45rem;
@@ -260,6 +309,14 @@ form {
   grid-template-columns: 1fr 1fr;
   justify-items: center;
   gap: 3rem;
+
+  @media (max-width: 480px) {
+    gap: 1rem;
+
+    input {
+      width: 40vw;
+    }
+  }
 }
 label {
   display: flex;
@@ -304,7 +361,7 @@ label span {
     align-items: center;
     margin: 0 auto;
     position: relative;
-    bottom: 2px;
+    bottom: 4px;
   }
 }
 .social-add:hover {
@@ -326,6 +383,13 @@ label span {
   transition: all 0.4s linear;
   transform: scale(0) rotate(0deg);
   box-shadow: 0 0 20px 25px #f7e600;
+
+  @media (max-width: 480px) {
+    width: 18rem;
+    height: 18rem;
+    top: -6.5rem;
+    left: -6.5rem;
+  }
 }
 .social-list-active {
   /* transform: rotate(720deg); */
@@ -335,12 +399,15 @@ label span {
   width: 5rem;
   transition: all 0.1s linear;
   cursor: pointer;
+
+  @media (max-width: 480px) {
+    width: 4rem;
+  }
 }
 .social-el:hover {
   transform: scale(1.1);
 }
 .instagram {
-  width: 75px;
   grid-area: 3/5;
 }
 .facebook {
@@ -374,6 +441,14 @@ label span {
   justify-content: center;
   gap: 1rem;
   margin: 0.5rem 0;
+
+  input {
+    max-width: 300px;
+    width: 40vw;
+    @media (max-width: 480px) {
+      width: 60vw;
+    }
+  }
 }
 .basket {
   cursor: pointer;

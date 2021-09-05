@@ -1,5 +1,11 @@
 <template>
   <section>
+    <div class="avatar-box">
+      <img
+        :src="avatar ? avatar : require('@/assets/pictures/user.svg')"
+        alt="avatar"
+      />
+    </div>
     <div class="mainInfo">
       <span>{{ userInfo.firstName }} </span>
       <span>{{ userInfo.secondName }}</span>
@@ -21,13 +27,25 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   props: ["userInfo"],
 
+  computed: {
+    ...mapGetters(["avatar"]),
+  },
+
   methods: {
+    ...mapActions(["getAvatar"]),
+
     returnImg(src) {
       return src;
     },
+  },
+
+  mounted() {
+    this.getAvatar();
   },
 };
 </script>
@@ -41,12 +59,35 @@ section {
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-top: 6rem;
+  padding-top: 5rem;
 
   .mainInfo {
     text-align: center;
     font-weight: 800;
     font-size: 2rem;
+  }
+}
+
+.avatar-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 100%;
+  margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    width: 100px;
+    height: 100px;
+  }
+  img {
+    width: 150px;
+
+    @media (max-width: 768px) {
+      width: 100px;
+    }
   }
 }
 .social-img {
