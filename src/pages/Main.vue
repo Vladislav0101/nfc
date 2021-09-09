@@ -90,6 +90,18 @@ export default {
     };
   },
 
+  computed: {
+    device() {
+      const content = getComputedStyle(document.body).content.split('"')[1];
+
+      if (content === "xs") {
+        return "mobile";
+      } else {
+        return "desctop";
+      }
+    },
+  },
+
   methods: {
     scroll() {
       this.changeBgColor();
@@ -144,10 +156,19 @@ export default {
     flyMobile() {
       const data = this.$refs.howItWorks?.getBoundingClientRect();
 
-      if (data.top - 150 < 0) {
-        this.showMobile = true;
+      if (this.device === "mobile") {
+        console.log(data.bottom, data.top, window.innerHeight);
+        if (window.innerHeight > data.bottom) {
+          this.showMobile = true;
+        } else {
+          this.showMobile = false;
+        }
       } else {
-        this.showMobile = false;
+        if (data.top - 150 < 0) {
+          this.showMobile = true;
+        } else {
+          this.showMobile = false;
+        }
       }
     },
 
@@ -173,11 +194,20 @@ main {
 h2 {
   font-size: 3rem;
   font-weight: 800;
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
+    text-align: center;
+  }
 }
 p {
   width: 100%;
   font-weight: 900;
   font-size: 1.3rem;
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
 }
 .see-tags {
   display: flex;
@@ -189,10 +219,20 @@ p {
   padding-top: 2rem;
   padding-bottom: 3rem;
 
+  @media (max-width: 480px) {
+    img {
+      width: 100%;
+    }
+  }
   h1 {
     color: #f7e600;
     font-weight: 900;
     font-size: 4rem;
+    text-align: center;
+
+    @media (max-width: 480px) {
+      font-size: 3rem;
+    }
   }
 
   a {
@@ -230,6 +270,13 @@ p {
     padding-inline: 1rem;
     line-height: 1.5;
     border-radius: 4px;
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    img {
+      width: 100%;
+    }
   }
 }
 
@@ -248,6 +295,9 @@ p {
     padding-top: 2rem;
     overflow: hidden;
 
+    @media (max-width: 480px) {
+      min-height: auto;
+    }
     h2 {
       color: #f7e600;
     }
@@ -258,6 +308,10 @@ p {
     img {
       transform: translateY(100%);
       transition: all 0.5s linear;
+
+      @media (max-width: 480px) {
+        width: 100%;
+      }
     }
 
     @keyframes showMobile {
@@ -299,6 +353,10 @@ p {
   }
   .editLink {
     transform: scale(1.4);
+
+    @media (max-width: 480px) {
+      transform: scale(0.9);
+    }
   }
   img {
     transform: scale(0.5);
@@ -308,10 +366,14 @@ p {
 
 .stick-it {
   min-height: 100vh;
-  padding-top: 3rem;
-  padding-bottom: 3rem;
   overflow: hidden;
   position: relative;
+  background-color: #0f0f0f;
+
+  .wrapper {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
 
   h2 {
     color: #f7e600;
@@ -328,6 +390,10 @@ p {
     width: 200px;
     right: 0;
     bottom: 4rem;
+
+    @media (max-width: 480px) {
+      width: 30vw;
+    }
   }
 }
 
@@ -347,10 +413,22 @@ p {
     margin-top: 4rem;
     padding: 2rem 1rem;
 
+    @media (max-width: 480px) {
+      margin-top: 0;
+
+      img {
+        width: 100%;
+      }
+    }
+
     h3 {
       color: #fcfcfc;
       font-size: 3rem;
       font-weight: 900;
+
+      @media (max-width: 480px) {
+        font-size: 2rem;
+      }
     }
 
     p {
@@ -367,6 +445,10 @@ p {
       font-weight: 700;
       border-radius: 30px;
       transition: all 0.1s linear;
+
+      @media (max-width: 480px) {
+        font-size: 1.2rem;
+      }
     }
 
     button:hover {

@@ -39,3 +39,9 @@ body::-webkit-scrollbar-thumb {
     padding-inline: 40px;
   }
 }
+
+@media (max-width: 480px) {
+  body {
+    content: 'xs';
+  }
+}
