@@ -4,8 +4,11 @@ import Vuelidate from 'vuelidate'
 
 import store from './store'
 import router from './route/index'
+import vueScroll from '@/utils/vue-scroll.js'
 
 import './assets/styles/main.scss'
+
+vueScroll();
 
 Vue.config.productionTip = false
 
